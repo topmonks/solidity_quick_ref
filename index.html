@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Solidity Quick Reference</title>
+
+    <style type="text/css" media="all">
+:root {
+  --original-black: rgb(33, 37, 41);
+}
+
+h1 {
+  color: var(--original-black);
+}
+
+pre {
+  margin-bottom: 0px;
+}
+
+pre code {
+  color: #e83e8c;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+footer {
+  border-top: 1px solid rgba(0,0,0,.1);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+section header {
+  margin-bottom: 5px;
+}
+
+.container {
+  font-size: 0.8rem;
+  color: #727272;
+}
+
+.container h1 {
+  font-size: 1.6rem;
+}
+
+.container code {
+  font-size: 0.875rem;
+}
+
+.container span {
+  color: #727272;
+}
+
+.container h2 {
+  font-size: 1.2rem;
+  padding-bottom: 2px;
+  padding-top: 5px;
+  border-bottom: 2px solid black;
+  color: var(--original-black);
+}
+
+.container h3 {
+  font-size: 1.0rem;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  color: var(--original-black);
+}
+
+.original-black {
+  color: var(--original-black);
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Solidity Quick Ref, <small>for version 0.4.24</small></h1>
+          <p class="original-black"><code><b>bold pink</b></code> = syntax. <code>pink</code> = example. <code><i>italics</i></code> = placeholder. Things in <code>[]</code> are optional. Things in <code>{}</code> are mandatory.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3">
+          <section>
+            <header>
+              <h2>Pragma</h2>
+              <code><b>pragma solidity ^{version};</b></code>
+              <code>pragma solidity ^0.4.24;</code>
+            </header>
+
+            <span>
+              Compiler version to use.
+            </span>
+          </section>
+
+          <section>
+            <header>
+              <h2>Comments</h2>
+              <code>// one liner</code>
+              <br />
+              <code>/* multi liner */</code>
+              <br />
+              <code>/// Natspec one liner</code>
+              <br />
+              <code>/** Natspec multi liner **/</code>
+            </header>
+
+            <span>Natspec is Doxygen-like syntax for documenting functions, arguments etc.</span>
+          </section>
+
+          <section>
+            <header>
+              <h2>Simple data types</h2>
+              <code><b><i>type</i> [public] <i>name</i>;</b></code>
+              <br />
+              <code>uint public amount;</code>
+            </header>
+
+            <p>
+              <code>delete amount;</code> - deletes variable content
+            </p>
+
+            <h3>Basic types</h3>
+            <p>
+              <code>bool</code>,
+              <code>int</code>(<code>int256</code> alias),
+              <code>uint</code>(<code>uint256</code> alias),
+              <code>byte</code>(<code>bytes1</code> alias)
+            </p>
+
+            <p>
+              <span>Ints and uints also as <code>int8</code> - <code>int256</code> in steps of 8.</span>
+              <span>Bytes also as <code>bytes1</code> - <code>bytes32</code> in steps of 1.</span>
+            </p>
+          </section>
+
+          <section>
+            <header>
+              <h3>String</h3>
+              <code><b>string [storage|memory] [public] <i>name</i>;</b></code>
+              <br />
+              <code>string memo;</code>
+            </header>
+          </section>
+
+          <section>
+            <header>
+              <h3>Bytes</h3>
+              <code><b>bytes [storage|memory] [public] <i>name</i>;</b></code>
+              <br />
+              <code>bytes public myBytes;</code>
+            </header>
+
+            <p>
+              <code>myBytes.length;</code> - get bytes length
+            </p>
+
+            <p>
+              <code>myBytes.push(hex"ff");</code>
+              - append byte
+            </p>
+          </section>
+        </div>
+
+        <div class="col-3">
+          <section>
+            <header>
+              <h2>Address type</h2>
+              <code><b>address [public] <i>name</i>;</b></code>
+              <br />
+              <code>address addr;</code>
+            </header>
+
+            <code>addr.balance</code>
+            <br />
+
+            <code>addr.transfer(100)</code>
+            <span>- sends 100 wei, forwards 2300 gas, throws on error</span>
+            <br />
+
+            <code>addr.send(100)</code>
+            <span>- sends 100 wei, forwards 2300 gas, returns true/false</span>
+            <br />
+
+            <code>addr.call('<i>func_signature</i>', [<i>argument</i>, ...])</code>
+            <span>- calls <i>func_signature</i> function and passes rest of the arguments to it</span>
+            <br />
+
+            <code>addr.delegatecall('<i>func_signature</i>', [<i>argument</i>, ...])</code>
+            <span>- same as call but evaluation context is set to current context</span>
+            <br />
+          </section>
+
+          <section>
+            <header>
+              <h2>Structs</h2>
+              <code><b>struct <i>name</i> { [<i>member</i>; ... ] };</b></code>
+              <br />
+            </header>
+
+            <pre><code>
+struct Person {
+  string name;
+  int age;
+}
+            </code></pre>
+
+            <code>Person customer;</code>
+            <br />
+
+
+            <code>customer = Person({ name: 'Mr. Nobody', age: 1 });</code>
+            <br />
+
+            <code>customer2 = Person('Mr. Nobody', 1);</code>
+            <br />
+
+            <code>customer.name;</code>
+            <br />
+
+            <code>customer.age = 99;</code>
+            <br />
+          </section>
+        </div>
+
+        <div class="col-6">
+          <div class="row">
+            <div class="col-6">
+              <h2>Arrays</h2>
+              <section>
+                <header>
+                  <code><b><i>type</i>[<i>size</i>] [memory|storage] [public] name;</b></code>
+                  <br />
+
+                  <code>int[5] myArray;</code>
+                  <br />
+
+                  <code>int[] anotherArray;</code> - dynamic array
+                </header>
+
+                <code>delete myArray;</code>
+                <span> - clears array's content</span>
+                <br />
+
+                <code>myArray.length;</code>
+                <span> - get array's length</span>
+                <br />
+
+                <code>myArray.push(1);</code>
+                <span> - push new element to array</span>
+                <br />
+
+                <code>myArray[3];</code>
+                - get element
+                <br />
+
+                <code>myArray[3] = 8;</code>
+                - set element
+                <br />
+
+                <code>uint[] memory myArray = new uint[](5);</code>
+                - memory array with size determined at runtime. Memory arrays can't have dynamic size
+                <br />
+              </section>
+            </div>
+
+            <div class="col-6">
+              <section>
+                <header>
+                  <h2>Mappings</h2>
+                  <code><b>mapping(<i>key_type</i> => <i>value_type</i>) [public] name;</b></code>
+                  <br />
+
+                  <code>mapping (address =&gt; int) funds;</code>
+                </header>
+
+                <code>funds[address] = 33;</code>
+                <span> - set value</span>
+                <br />
+
+                <code>funds[address];</code>
+                <span> - retrieve value</span>
+                <br />
+
+                <p>
+                  <span>Simple types can be used as keys. Any types can be used as values.</span>
+                </p>
+
+                <p>
+                  <span>All possible mapping keys always exists and have a default byte value of all zeroes.</span>
+                </p>
+
+                <p>
+                  <span>Can't be iterated, checked for length, retrieve which keys were set etc. Also can't be created in memory.</span>
+                </p>
+              </section>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <h2>Flow control</h2>
+              <section>
+                <code>
+                  <b>
+                    if (<i>condition</i>) { ... };
+                  </b>
+                </code>
+              </section>
+
+              <section>
+                <code>
+                  <b>
+                    if (<i>condition</i>) { ... } else { ... };
+                  </b>
+                </code>
+              </section>
+
+              <section>
+                <code>
+                  <b>
+                    for (<i>declaration</i>; <i>condition</i>; <i>expression</i>) { ... };
+                  </b>
+                </code>
+                <br />
+                <code>
+                  for (uint counter; counter &lt; 10; counter++) { ... };
+                </code>
+              </section>
+
+              <section>
+                <code>
+                  <b>
+                    while (<i>condition</i>) { ... };
+                  </b>
+                </code>
+              </section>
+
+              <section>
+                <code>
+                  <b>
+                    do { ... } while (<i>condition</i>);
+                  </b>
+                </code>
+              </section>
+
+              <section>
+                <code>
+                  <b>
+                    <i>condition</i> ? <i>expression</i> : <i>expression</i>;
+                  </b>
+                </code>
+              </section>
+              <br />
+              <code>continue</code>, <code>break</code> and <code>return</code> can be used to influence flow.
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <section>
+                <header>
+                  <h2>Enums</h2>
+                  <code><b>enum <i>name</i> { [<i>state</i>, ...] };</b></code>
+                  <br />
+                  <code>enum Mood { Happy, Anxious, Sad };</code>
+                </header>
+
+                <code>Mood dogMood;</code>
+                <br />
+
+                <code>dogMood = Mood.Happy;</code>
+                <br />
+              </section>
+            </div>
+
+            <div class="col-6">
+              <section>
+                <h2>Imports</h2>
+                <code><b>import "<i>path</i>";</b></code>
+                <br />
+                <code><b>import * as <i>name</i> from "<i>path</i>";</b></code>
+                <br />
+                <code><b>import { <i>name</i> as <i>alias</i>|<i>name</i>, ... } from "<i>path</i>";</b></code>
+                <br />
+                <code><b>import "<i>path</i>" as <i>namespace</i>;</b></code>
+                <br />
+
+                <p>All paths are relative.</p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-6">
+          <section>
+            <h2>Contract declaration</h2>
+            <pre><code>
+contract Memo {
+  string public memo;
+  address owner;
+
+  constructor(string _memo) public {
+    memo = _memo;
+    address = msg.sender;
+  }
+
+  function changeMemo(string newMemo) public onlyOwner {
+    memo = newMemo;
+  }
+
+  modifier onlyOwner {
+    require(msg.sender == owner);
+    _;
+  }
+}
+            </code></pre>
+
+            <code>Memo memo = new Memo("my precious memo");</code> - create new contract
+            <br />
+
+            <code>Memo memo = Memo(existingMemoAddress);</code> - intialize already existing contract
+            <br />
+
+            <code>this;</code> - current contract
+            <br />
+
+            <code>address(this);</code>
+            - converts contract to address
+            <br />
+
+            <code>selfdestruct(ownerAddress);</code> - destroys contract and sends it's funds to address. Must be called from contract.
+            <br />
+          </section>
+
+          <section>
+            <h2>Functions</h2>
+
+            <code><b>function <i>name</i>([argument, ...]) [<i>visibility</i>] [view|pure] [payable] [modifier, ...] [returns([argument, ...])];</b></code>
+            <br />
+
+            <pre><code>
+function setName(string name) public { ... };
+function getName() view public returns(string name) { ... };
+function compute() private returns(int num1, int num2) { ... };
+            </code></pre>
+            <br />
+
+            <code>compute();</code>
+            - function call
+            <br />
+
+            <p>
+              <code>compute.value(300).gas(4000)();</code>
+              - call a func, send some ether along, and set it's gas limit
+            </p>
+
+            <p>
+              Visibility can be
+              <code><b>public</b></code>,
+              <code><b>private</b></code>,
+              <code><b>internal</b></code>,
+              <code><b>external</b></code>
+            </p>
+
+            <p>
+              <code><b>view</b></code> func doesn't modify blockchain anyhow.
+              <code><b>pure</b></code> func doesn't modify or read blockchain.
+            </p>
+
+            <p>
+              <code><b>payable</b></code> func can receive ether.
+            </p>
+          </section>
+        </div>
+
+        <div class="col-3">
+          <section>
+            <header>
+              <h2>Inheritance</h2>
+              <code><b>contract <i>name</i> is [<i>ancestor</i>, ... ] { ... };</b></code>
+            </header>
+
+            <code>super.function();</code><span>- call func from first ancestor</span>
+            <br />
+
+            <code>SpecificAncestor.function();</code><span>- call func from specific ancestor</span>
+            <br />
+
+            <h3>Ancestor contructors</h3>
+            <code>contract Derived is Base(7) { ... };</code><span>- pass a static value to ancestor constructor</span>
+            <br />
+
+            <code>constructor(uint _y) Base(_y * _y) public {};</code><span>- pass a dynamic value</span>
+            <br />
+
+            <p>All ancestor constructors are called upon contract initialization and all needs to have theirs arguments set in one of the ways above.</p>
+
+          </section>
+
+          <section>
+            <h2>require / revert / assert</h2>
+
+            <code><b>require(<i>condition</i>,[<i>message</i>])</b></code><span>- use for public facing assertions</span>
+            <br />
+
+            <code><b>revert([<i>message</i>])</b></code>
+            <br />
+
+            <code><b>assert(<i>condition</i>)</b></code><span>- use for internal assertions</span>
+            <br />
+
+            <span>All of these throw an error and revert current transaction.</span>
+          </section>
+
+          <section>
+            <h2>Inline assembly</h2>
+            <code><b>assembly { ... }</b></code>
+            - block with inline assembly to get closer to EVM
+          </section>
+
+          <section>
+            <h2>Deprecations</h2>
+
+            <code><b>constant</b></code>
+            <span>- function modifier</span>
+            <br />
+
+            <code><b>year</b></code>
+            <span>- time literal suffix</span>
+            <br />
+
+            <code><b>throw</b></code>
+            <span>- alias to revert</span>
+            <br />
+
+            <code><b>block.blockhash(<i>block_number</i>);</b></code>
+            <span>- replaced by global <code><b>blockhash(<i>block_number</i>);</b></code></span>
+            <br />
+
+            <code>msg.gas</code>
+            <span>- replaced by global <code><b>gasleft();</b></code></span>
+            <br />
+
+            <code>suicide</code>
+            <span>- alias to <code><b>selfdestruct(<i>address</i>)</b></code></span>
+            <br />
+
+            <code>keccak256(a, b)</code>
+            <span>- deprecated in favor of</span><code>keccak256(abi.encodePacked(a, b))</code>
+            <br />
+
+            <p>
+              <code><b>callcode</b></code>
+            </p>
+
+            <span>Also contructors written as functions with same name as contract.</span>
+            <br />
+          </section>
+        </div>
+
+        <div class="col-3">
+          <section>
+            <h2>Literals and globals</h2>
+            <code><b>wei</b></code>,
+            <code><b>finney</b></code>,
+            <code><b>szabo</b></code>,
+            <code><b>ether</b></code>
+            <span> - literal number suffixes for transfering numbers to wei</span>
+            <br />
+
+            <code>1000 finney == 1 ether</code>
+            <br />
+            <br />
+
+            <code><b>seconds</b></code>,
+            <code><b>minutes</b></code>,
+            <code><b>hours</b></code>,
+            <code><b>days</b></code>,
+            <code><b>weeks</b></code>
+            <span> - literal number suffixes for transfering numbers to miliseconds</span>
+            <br />
+
+            <code>60 seconds == 1 minutes</code>
+            <br />
+            <br />
+
+            <code><b>block.{method}</b></code> - current block info
+            <br />
+            <code>block.number</code>
+            <br />
+            <code>block.gaslimit</code>
+            <br />
+            ... and more
+            <br />
+            <br />
+
+
+            <code><b>msg.{method}</b></code> - various calldata
+            <code>msg.gas</code>
+            <br />
+            <code>msg.sender</code>
+            <br />
+            ... and more
+            <br />
+            <br />
+
+            <code><b>tx.{method}</b></code> - current transaction
+            <code>tx.gasprice</code>
+            <br />
+            <code>tx.origin</code>
+            <br />
+            <br />
+
+            <code><b>abi.{method}</b></code> - encoding methods
+            <code>abi.encode(arguments)</code>
+            <br />
+            <code>abi.encodePacked(arguments)</code>
+            <br />
+            ... and more
+            <br />
+            <br />
+
+            <h3>Cryptographic funcs</h3>
+            <code><b>keccak256([<i>argument</i>, ...]);</b></code>
+            <br />
+            <code><b>sha256([<i>argument</i>, ...]);</b></code>
+            <br />
+            <code><b>ripemd160([<i>argument, ...</i>]);</b></code>
+            <br />
+
+            <h3>Others</h3>
+            <code><b>this;</b></code> - current contract
+            <br />
+
+            <code><b>now;</b></code> - current time
+            <br />
+
+            <code><b>gasleft();</b></code> - remaining gas
+            <br />
+          </section>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-6">
+          <section>
+            <h2>Function Modifiers</h2>
+            <code><b>modifier <i>name</i>([<i>argument</i>, ...]) { ... _; ... }</b></code>
+
+            <pre><code>
+modifier onlyOwner {
+  require(msg.sender == owner);
+  _;
+}
+            </code></pre>
+
+            <code><b>_;</b></code> <span>- marks where modified function call will run.</span>
+
+            <h3>Usage</h3>
+            <code>function a(int num) public onlyOwner { ... }</code>
+            <br />
+            <code>function b(int num) public onlyOwner, secondModifier { ... }</code>
+
+            <h3>Passing arguments</h3>
+            <code>function c(int num) public anotherModifier(num) { ... }</code>
+          </section>
+
+          <section>
+            <header>
+              <h2>Events</h2>
+
+              <code><b>event <i>name</i>([argument, ...]) [anonymous];</b></code>
+              <br />
+
+              <code><b>emit <i>name</i>([argument, ...]);</b></code>
+            </header>
+
+            <code>event FundTransfer(address indexed to, uint value);</code>
+            <br />
+
+            <p>
+              <code>emit FundTransfer(someAddress, 100);</code>
+            </p>
+
+            <code><b>indexed</b></code> arguments can be used for filtering later. <code><b>anonymous</b></code> event can't be filtered for by it's name.
+          </section>
+        </div>
+
+        <div class="col-6">
+          <section>
+            <h2>Interfaces</h2>
+            <pre><code>
+interface AbstractZombie {
+  function feedOn(address target) public onlyOwner;
+  function getLevel() public view returns(uint level) onlyOwner;
+}
+            </code></pre>
+
+            <p>Interfaces are like abstract contracts which other contracts can inherit. Inheriting contract has to implement all interface methods.</p>
+            <p>Interfaces can't contain anything else than function signatures.</p>
+          </section>
+
+          <section>
+            <h2>Libraries</h2>
+            <pre><code>
+library MyLibrary {
+  function add(int1 num, int num2) view returns(int result) {
+    return num1 + num2;
+  }
+}
+
+contract Number {
+  int num;
+
+  using MyLibrary for int;
+
+  function addTwo() public {
+    num = num.add(42);
+  }
+}
+            </code></pre>
+            <br />
+
+            <p>In the code above functions from MyLibrary can be called directly on all <code>int</code>s. The variable itself is then passed as a first argument to the library func.</p>
+
+            <p>Library functions can also be called statically as <code>MyLibrary.add(40, 2);</code>. It's not needed to use <code><b>using</b></code> clause then.</p>
+
+            <p>Code in library <b>is executed in caller's context</b> and libraries thus see and can manipulate local state.</p>
+          </section>
+        </div>
+      </div>
+
+      <footer>
+        <div class="row">
+          <div class="col-12">
+            Created by
+            <a href="https://topmonks.com">
+              <svg class="monk" width="26px" height="32px" viewBox="0 0 30 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-268.000000, -13.000000)" fill="#5c5fd4" fill-rule="nonzero"><g id="header" transform="translate(250.000000, -103.000000)"><g id="logo"><g id="Group" transform="translate(18.000000, 116.000000)"><ellipse id="Oval" cx="16.2917949" cy="5.605" rx="1" ry="1"></ellipse><ellipse id="Oval" cx="16.4628205" cy="3.806" rx="1" ry="1"></ellipse><path d="M19.7071795,11.5 C18.5412821,12 17.3907692,12 16.2702564,11.5 C16.2702564,13.25 19.7071795,13.25 19.7071795,11.5 Z" id="Shape"></path><path d="M13.9092308,11.5 C12.7887179,12 11.6382051,12 10.4723077,11.5 C10.4723077,13.25 13.9092308,13.25 13.9092308,11.5 Z" id="Shape"></path><path d="M15.1046154,34.5 C16.9574359,34.5 16.6930769,34.90725 19.8810256,35.56775 C28.7274359,37.1995 31.9025641,28.167 28.8415385,24.602 C28.1738462,23.8245 27.4907692,23.3545 26.8238462,23.11525 C26.7689744,22.69125 26.2689744,19.098 24.8764103,17.36525 C23.0687179,15.59925 21.4787179,15.1405 21.3753846,15.112 C21.654359,14.56725 21.9115385,14.102 22.0502564,13.81575 C23.2335897,13.84025 25.4710256,10.84125 22.6607692,8.635 C22.6607692,1.854 16.9574359,0.243 15.0448718,0.2375 C13.1920513,0.243 7.45333333,1.85375 7.45333333,8.63475 C4.64307692,10.841 6.9,13.8395 8.08358974,13.815 C8.22230769,14.101 8.48179487,14.56575 8.76102564,15.1105 C8.65769231,15.139 7.06871795,15.59625 5.26128205,17.3625 C3.86871795,19.0955 3.36948718,22.686 3.31461538,23.11 C2.64769231,23.34925 1.96487179,23.814 1.2974359,24.5915 C-1.76384615,28.1565 1.41717949,37.19975 10.2633333,35.56775 C13.4507692,34.90725 13.1720513,34.5 15.0448718,34.5 L15.1046154,34.5 Z M23.474359,18.1395 C24.3092308,19.24475 24.8076923,21.03925 24.9982051,22.965 C24.8753846,22.9875 24.7564103,23.016 24.6376923,23.04975 C24.2069231,22.6965 23.3158974,22.01975 22.5982051,21.83275 C23.0689744,21.011 23.2138462,20.49 23.2138462,20.49 C22.9646154,20.94625 22.6897436,21.38 22.394359,21.793 C22.3912821,21.7925 22.3882051,21.792 22.3851282,21.79175 C21.3889744,21.67525 19.6720513,22.5125 19.2176923,23.715 C19.0625641,24.12575 19.0764103,24.58475 19.1917949,25.04825 C15.7407692,27.693 11.7874359,28.798 10.9307692,29.01575 C10.3866667,28.541 10.0212821,28.06075 9.71205128,27.55925 C19.5628205,25.13375 21.9133333,18.9375 22.3635897,17.33675 C22.7282051,17.54625 23.1097436,17.80975 23.474359,18.1395 Z M23.6015385,23.49575 C22.8984615,23.90225 22.3353846,24.4495 21.9974359,24.9095 C21.5979487,25.4535 21.2830769,25.7635 20.9315385,26.26725 C20.5612821,25.8235 19.9441026,24.98275 20.174359,24.1615 C20.3989744,23.36025 21.4789744,22.679 22.1666667,22.7045 C22.7476923,22.7265 23.2889744,23.179 23.6015385,23.49575 Z M9.08769231,26.44225 C8.82717949,25.96075 8.54076923,25.45375 8.14128205,24.90975 C7.80333333,24.44975 7.24025641,23.9025 6.53717949,23.496 C6.84974359,23.17925 7.39102564,22.7265 7.97179487,22.705 C8.65974359,22.67925 9.73948718,23.36075 9.96410256,24.162 C10.194359,24.98275 9.45769231,25.9985 9.08769231,26.44225 Z M8.41641026,12.6415 C7.32717949,12.2545 6.76,10.64325 8.16435897,9.51675 C8.61102564,9.8025 8.99384615,10.324 8.99384615,10.324 C8.18692308,6.17175 10.5615385,1.8705 15.0692308,1.867 C19.5766667,1.8705 21.9515385,6.1715 21.1446154,10.324 C21.1446154,10.324 21.5274359,9.8025 21.9741026,9.51675 C23.3784615,10.64325 22.8112821,12.2545 21.7220513,12.6415 C21.43,12.39875 21.2715385,12.25175 21.0389744,11.951 C20.715641,14.44925 18.9374359,18.17075 15.0692308,18.17425 C11.2010256,18.17075 9.42282051,14.44925 9.09948718,11.951 C8.86717949,12.2515 8.70846154,12.3985 8.41641026,12.6415 Z M6.65666667,18.1395 C7.93358974,16.98375 9.40358974,16.64125 9.64179487,16.59225 C10.7105128,18.10075 12.4148718,19.597 15.0448718,19.601 C17.7346154,19.59675 19.4035897,18.10075 20.4723077,16.59225 C20.5994872,16.6185 21.0838462,16.72875 21.7023077,17.00225 C19.4346154,23.38525 12.8612821,25.44575 10.5748718,26.00075 C10.9394872,25.20375 11.1582051,24.34375 10.9205128,23.715 C10.6835897,23.08825 10.1035897,22.56125 9.46153846,22.21625 C9.45282051,21.866 9.45717949,20.817 9.78461538,20.08225 C9.10333333,20.81275 8.77230769,21.4855 8.64051282,21.88425 C8.31897436,21.796 8.01128205,21.7615 7.75230769,21.79175 C7.0074359,21.879 5.97333333,22.66075 5.49871795,23.05 C5.38,23.01625 5.25923077,22.98775 5.13641026,22.96525 C5.32717949,21.03925 5.82179487,19.24475 6.65666667,18.1395 Z M21.6123077,34.00875 C18.2371795,34.00875 17.435641,32.75 15.1046154,32.75 L15.0448718,32.75 C12.6838462,32.75 11.9069231,34.00875 8.53153846,34.00875 C2.59641026,33.97675 0.165384615,27.8255 3.09025641,25.216 C4.58461538,24.0505 6.4674359,24.74225 7.60307692,26.4615 C8.73871795,28.18075 10.4423077,30.984 14.0884615,30.819 C13.1369231,30.4315 12.3992308,30.05125 11.8115385,29.67375 C15.2348718,28.46675 17.6564103,26.98425 19.3594872,25.566 C19.5882051,26.1445 19.9384615,26.704 20.2787179,27.159 C19.6076923,28.10575 18.8305128,28.533 16.7584615,29.48475 C19.6274359,29.25175 20.6635897,28.319 22.3574359,26.45425 C23.7479487,24.92325 25.5566667,24.05075 27.0510256,25.21625 C29.9758974,27.8255 27.5474359,33.97675 21.6123077,34.00875 Z" id="Shape"></path><ellipse id="Oval" cx="13.6758974" cy="3.806" rx="1" ry="1"></ellipse><ellipse id="Oval" cx="14.0230769" cy="7.462" rx="1" ry="1"></ellipse><ellipse id="Oval" cx="16.1153846" cy="7.462" rx="1" ry="1"></ellipse><ellipse id="Oval" cx="13.8466667" cy="5.605" rx="1" ry="1"></ellipse></g></g></g></g></g></svg>
+            </a>.
+
+            Found a bug? Open up an issue or pull request <a href="https://github.com/topmonks/solidity_quick_ref">here</a>.
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
