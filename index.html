@@ -89,7 +89,7 @@ section header {
       </div>
 
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
           <section>
             <header>
               <h2>Pragma</h2>
@@ -171,7 +171,7 @@ section header {
           </section>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
           <section>
             <header>
               <h2>Address type</h2>
@@ -232,9 +232,9 @@ struct Person {
           </section>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-6">
           <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
               <h2>Arrays</h2>
               <section>
                 <header>
@@ -273,7 +273,7 @@ struct Person {
               </section>
             </div>
 
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
               <section>
                 <header>
                   <h2>Mappings</h2>
@@ -307,7 +307,8 @@ struct Person {
           </div>
 
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 d-lg-none d-xl-block">
+              <!-- Flow control markup is on 2 places to be nicely responsive. Please don't forget to modify both of them when making adjustments -->
               <h2>Flow control</h2>
               <section>
                 <code>
@@ -366,7 +367,7 @@ struct Person {
           </div>
 
           <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
               <section>
                 <header>
                   <h2>Enums</h2>
@@ -383,7 +384,8 @@ struct Person {
               </section>
             </div>
 
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6 d-lg-none d-xl-block">
+              <!-- Imports markup is on 2 places to be nicely responsive. Please don't forget to modify both of them when making adjustments -->
               <section>
                 <h2>Imports</h2>
                 <code><b>import "<i>path</i>";</b></code>
@@ -402,10 +404,85 @@ struct Person {
         </div>
       </div>
 
+      <div class="row d-none d-lg-flex d-xl-none">
+        <div class="col-6">
+          <h2>Flow control</h2>
+          <section>
+            <code>
+              <b>
+                if (<i>condition</i>) { ... };
+              </b>
+            </code>
+          </section>
+
+          <section>
+            <code>
+              <b>
+                if (<i>condition</i>) { ... } else { ... };
+              </b>
+            </code>
+          </section>
+
+          <section>
+            <code>
+              <b>
+                for (<i>declaration</i>; <i>condition</i>; <i>expression</i>) { ... };
+              </b>
+            </code>
+            <br />
+            <code>
+              for (uint counter; counter &lt; 10; counter++) { ... };
+            </code>
+          </section>
+
+          <section>
+            <code>
+              <b>
+                while (<i>condition</i>) { ... };
+              </b>
+            </code>
+          </section>
+
+          <section>
+            <code>
+              <b>
+                do { ... } while (<i>condition</i>);
+              </b>
+            </code>
+          </section>
+
+          <section>
+            <code>
+              <b>
+                <i>condition</i> ? <i>expression</i> : <i>expression</i>;
+              </b>
+            </code>
+          </section>
+          <br />
+          <code>continue</code>, <code>break</code> and <code>return</code> can be used to influence flow.
+        </div>
+
+        <div class="col-6">
+          <section>
+            <h2>Imports</h2>
+            <code><b>import "<i>path</i>";</b></code>
+            <br />
+            <code><b>import * as <i>name</i> from "<i>path</i>";</b></code>
+            <br />
+            <code><b>import { <i>name</i> as <i>alias</i>|<i>name</i>, ... } from "<i>path</i>";</b></code>
+            <br />
+            <code><b>import "<i>path</i>" as <i>namespace</i>;</b></code>
+            <br />
+
+            <p>All paths are relative.</p>
+          </section>
+        </div>
+      </div>
+
       <hr />
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-xs-12 col-lg-6">
           <section>
             <h2>Contract declaration</h2>
             <pre><code>
@@ -487,178 +564,182 @@ function compute() private returns(int num1, int num2) { ... };
           </section>
         </div>
 
-        <div class="col-3">
-          <section>
-            <header>
-              <h2>Inheritance</h2>
-              <code><b>contract <i>name</i> is [<i>ancestor</i>, ... ] { ... };</b></code>
-            </header>
+        <div class="col-xs-12 col-lg-6">
+          <div class="row">
+            <div class="col-xs-12 col-xl-6">
+              <section>
+                <header>
+                  <h2>Inheritance</h2>
+                  <code><b>contract <i>name</i> is [<i>ancestor</i>, ... ] { ... };</b></code>
+                </header>
 
-            <code>super.function();</code><span>- call func from first ancestor</span>
-            <br />
+                <code>super.function();</code><span>- call func from first ancestor</span>
+                <br />
 
-            <code>SpecificAncestor.function();</code><span>- call func from specific ancestor</span>
-            <br />
+                <code>SpecificAncestor.function();</code><span>- call func from specific ancestor</span>
+                <br />
 
-            <h3>Ancestor contructors</h3>
-            <code>contract Derived is Base(7) { ... };</code><span>- pass a static value to ancestor constructor</span>
-            <br />
+                <h3>Ancestor contructors</h3>
+                <code>contract Derived is Base(7) { ... };</code><span>- pass a static value to ancestor constructor</span>
+                <br />
 
-            <code>constructor(uint _y) Base(_y * _y) public {};</code><span>- pass a dynamic value</span>
-            <br />
+                <code>constructor(uint _y) Base(_y * _y) public {};</code><span>- pass a dynamic value</span>
+                <br />
 
-            <p>All ancestor constructors are called upon contract initialization and all needs to have theirs arguments set in one of the ways above.</p>
+                <p>All ancestor constructors are called upon contract initialization and all needs to have theirs arguments set in one of the ways above.</p>
 
-          </section>
+              </section>
 
-          <section>
-            <h2>require / revert / assert</h2>
+              <section>
+                <h2>require / revert / assert</h2>
 
-            <code><b>require(<i>condition</i>,[<i>message</i>])</b></code><span>- use for public facing assertions</span>
-            <br />
+                <code><b>require(<i>condition</i>,[<i>message</i>])</b></code><span>- use for public facing assertions</span>
+                <br />
 
-            <code><b>revert([<i>message</i>])</b></code>
-            <br />
+                <code><b>revert([<i>message</i>])</b></code>
+                <br />
 
-            <code><b>assert(<i>condition</i>)</b></code><span>- use for internal assertions</span>
-            <br />
+                <code><b>assert(<i>condition</i>)</b></code><span>- use for internal assertions</span>
+                <br />
 
-            <span>All of these throw an error and revert current transaction.</span>
-          </section>
+                <span>All of these throw an error and revert current transaction.</span>
+              </section>
 
-          <section>
-            <h2>Inline assembly</h2>
-            <code><b>assembly { ... }</b></code>
-            - block with inline assembly to get closer to EVM
-          </section>
+              <section>
+                <h2>Inline assembly</h2>
+                <code><b>assembly { ... }</b></code>
+                - block with inline assembly to get closer to EVM
+              </section>
 
-          <section>
-            <h2>Deprecations</h2>
+              <section>
+                <h2>Deprecations</h2>
 
-            <code><b>constant</b></code>
-            <span>- function modifier</span>
-            <br />
+                <code><b>constant</b></code>
+                <span>- function modifier</span>
+                <br />
 
-            <code><b>year</b></code>
-            <span>- time literal suffix</span>
-            <br />
+                <code><b>year</b></code>
+                <span>- time literal suffix</span>
+                <br />
 
-            <code><b>throw</b></code>
-            <span>- alias to revert</span>
-            <br />
+                <code><b>throw</b></code>
+                <span>- alias to revert</span>
+                <br />
 
-            <code><b>block.blockhash(<i>block_number</i>);</b></code>
-            <span>- replaced by global <code><b>blockhash(<i>block_number</i>);</b></code></span>
-            <br />
+                <code><b>block.blockhash(<i>block_number</i>);</b></code>
+                <span>- replaced by global <code><b>blockhash(<i>block_number</i>);</b></code></span>
+                <br />
 
-            <code>msg.gas</code>
-            <span>- replaced by global <code><b>gasleft();</b></code></span>
-            <br />
+                <code>msg.gas</code>
+                <span>- replaced by global <code><b>gasleft();</b></code></span>
+                <br />
 
-            <code>suicide</code>
-            <span>- alias to <code><b>selfdestruct(<i>address</i>)</b></code></span>
-            <br />
+                <code>suicide</code>
+                <span>- alias to <code><b>selfdestruct(<i>address</i>)</b></code></span>
+                <br />
 
-            <code>keccak256(a, b)</code>
-            <span>- deprecated in favor of</span><code>keccak256(abi.encodePacked(a, b))</code>
-            <br />
+                <code>keccak256(a, b)</code>
+                <span>- deprecated in favor of</span><code>keccak256(abi.encodePacked(a, b))</code>
+                <br />
 
-            <p>
-              <code><b>callcode</b></code>
-            </p>
+                <p>
+                  <code><b>callcode</b></code>
+                </p>
 
-            <span>Also contructors written as functions with same name as contract.</span>
-            <br />
-          </section>
-        </div>
+                <span>Also contructors written as functions with same name as contract.</span>
+                <br />
+              </section>
+            </div>
 
-        <div class="col-3">
-          <section>
-            <h2>Literals and globals</h2>
-            <code><b>wei</b></code>,
-            <code><b>finney</b></code>,
-            <code><b>szabo</b></code>,
-            <code><b>ether</b></code>
-            <span> - literal number suffixes for transfering numbers to wei</span>
-            <br />
+            <div class="col-xs-12 col-xl-6">
+              <section>
+                <h2>Literals and globals</h2>
+                <code><b>wei</b></code>,
+                <code><b>finney</b></code>,
+                <code><b>szabo</b></code>,
+                <code><b>ether</b></code>
+                <span> - literal number suffixes for transfering numbers to wei</span>
+                <br />
 
-            <code>1000 finney == 1 ether</code>
-            <br />
-            <br />
+                <code>1000 finney == 1 ether</code>
+                <br />
+                <br />
 
-            <code><b>seconds</b></code>,
-            <code><b>minutes</b></code>,
-            <code><b>hours</b></code>,
-            <code><b>days</b></code>,
-            <code><b>weeks</b></code>
-            <span> - literal number suffixes for transfering numbers to miliseconds</span>
-            <br />
+                <code><b>seconds</b></code>,
+                <code><b>minutes</b></code>,
+                <code><b>hours</b></code>,
+                <code><b>days</b></code>,
+                <code><b>weeks</b></code>
+                <span> - literal number suffixes for transfering numbers to miliseconds</span>
+                <br />
 
-            <code>60 seconds == 1 minutes</code>
-            <br />
-            <br />
+                <code>60 seconds == 1 minutes</code>
+                <br />
+                <br />
 
-            <code><b>block.{method}</b></code> - current block info
-            <br />
-            <code>block.number</code>
-            <br />
-            <code>block.gaslimit</code>
-            <br />
-            ... and more
-            <br />
-            <br />
+                <code><b>block.{method}</b></code> - current block info
+                <br />
+                <code>block.number</code>
+                <br />
+                <code>block.gaslimit</code>
+                <br />
+                ... and more
+                <br />
+                <br />
 
 
-            <code><b>msg.{method}</b></code> - various calldata
-            <code>msg.gas</code>
-            <br />
-            <code>msg.sender</code>
-            <br />
-            ... and more
-            <br />
-            <br />
+                <code><b>msg.{method}</b></code> - various calldata
+                <code>msg.gas</code>
+                <br />
+                <code>msg.sender</code>
+                <br />
+                ... and more
+                <br />
+                <br />
 
-            <code><b>tx.{method}</b></code> - current transaction
-            <code>tx.gasprice</code>
-            <br />
-            <code>tx.origin</code>
-            <br />
-            <br />
+                <code><b>tx.{method}</b></code> - current transaction
+                <code>tx.gasprice</code>
+                <br />
+                <code>tx.origin</code>
+                <br />
+                <br />
 
-            <code><b>abi.{method}</b></code> - encoding methods
-            <code>abi.encode(arguments)</code>
-            <br />
-            <code>abi.encodePacked(arguments)</code>
-            <br />
-            ... and more
-            <br />
-            <br />
+                <code><b>abi.{method}</b></code> - encoding methods
+                <code>abi.encode(arguments)</code>
+                <br />
+                <code>abi.encodePacked(arguments)</code>
+                <br />
+                ... and more
+                <br />
+                <br />
 
-            <h3>Cryptographic funcs</h3>
-            <code><b>keccak256([<i>argument</i>, ...]);</b></code>
-            <br />
-            <code><b>sha256([<i>argument</i>, ...]);</b></code>
-            <br />
-            <code><b>ripemd160([<i>argument, ...</i>]);</b></code>
-            <br />
+                <h3>Cryptographic funcs</h3>
+                <code><b>keccak256([<i>argument</i>, ...]);</b></code>
+                <br />
+                <code><b>sha256([<i>argument</i>, ...]);</b></code>
+                <br />
+                <code><b>ripemd160([<i>argument, ...</i>]);</b></code>
+                <br />
 
-            <h3>Others</h3>
-            <code><b>this;</b></code> - current contract
-            <br />
+                <h3>Others</h3>
+                <code><b>this;</b></code> - current contract
+                <br />
 
-            <code><b>now;</b></code> - current time
-            <br />
+                <code><b>now;</b></code> - current time
+                <br />
 
-            <code><b>gasleft();</b></code> - remaining gas
-            <br />
-          </section>
+                <code><b>gasleft();</b></code> - remaining gas
+                <br />
+              </section>
+            </div>
+          </div>
         </div>
       </div>
 
       <hr />
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-xs-12 col-lg-6">
           <section>
             <h2>Function Modifiers</h2>
             <code><b>modifier <i>name</i>([<i>argument</i>, ...]) { ... _; ... }</b></code>
@@ -702,7 +783,7 @@ modifier onlyOwner {
           </section>
         </div>
 
-        <div class="col-6">
+        <div class="col-xs-12 col-lg-6">
           <section>
             <h2>Interfaces</h2>
             <pre><code>
