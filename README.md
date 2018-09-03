@@ -2,6 +2,8 @@
 
 Quick reference for Solidity v 0.4.24. Please open up an issue/pull request if you found or want to enchance this.
 
+Live: https://topmonks.github.io/solidity_quick_ref/
+
 ## TODO
 
 * constant modifier for variables
