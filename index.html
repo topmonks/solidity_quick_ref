@@ -43,8 +43,8 @@ body > header h1, h2 {
 }
 
 body > header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 0.2rem;
+  font-size: 3rem;
+  margin-bottom: 0.1rem;
 }
 
 body > header h2 {
@@ -101,58 +101,81 @@ footer {
 .original-black {
   color: var(--original-black);
 }
+
+.logo {
+  max-width: 250px;
+}
+
+.social-icons {
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 991px) {
+  body > header h1 {
+    font-size: 2rem;
+  }
+
+  .logo {
+    max-width: 150px;
+  }
+
+  .social-icons img {
+    max-width: 16px;
+  }
+}
+
     </style>
   </head>
 
   <body>
     <header>
-      <div class="container d-none d-sm-none d-md-flex justify-content-between align-items-center pt-4 pb-4">
-        <div>
-          <img src="topmonks_logo.svg" alt="TopMonks logo" />
+      <div class="container d-none d-sm-flex justify-content-between align-items-center pt-4 pb-4">
+        <div class="text-left">
+          <h1>Solidity Cheatsheet</h1>
+          <h2>for version 0.4.24</h2>
         </div>
 
         <div class="text-right">
-          <h1>Solidity Cheatsheet</h1>
-          <h2>for version 0.4.24</h2>
+          <img src="topmonks_logo.svg" alt="TopMonks logo" class="logo" />
 
-          <div>
+          <div class="social-icons">
             <a href="https://blockchain.topmonks.com/">
-              <img src="globe.svg" alt="Globe icon" />
+              <img src="globe.svg" alt="Globe icon"/>
             </a>
 
             <a href="https://github.com/topmonks/solidity_quick_ref">
-              <img src="github.svg" alt="Github icon" />
+              <img src="github.svg" alt="Github icon"/>
             </a>
 
             <a href="https://twitter.com/topmonks">
-              <img src="twitter.svg" alt="Twitter icon" />
+              <img src="twitter.svg" alt="Twitter icon"/>
             </a>
           </div>
         </div>
       </div>
 
-      <div class="container d-block d-md-none justify-content-between align-items-center pt-4 pb-4">
+      <div class="container d-block d-sm-none justify-content-between align-items-center pt-4 pb-4">
         <div class="row">
-          <div class="col-12 text-center">
-            <img src="topmonks_logo.svg" alt="TopMonks logo" class="img-fluid" />
+          <div class="col-12">
+            <h1>Solidity Cheatsheet</h1>
+            <h2>for version 0.4.24</h2>
           </div>
 
           <div class="col-12 mt-3">
             <div class="text-right">
-              <h1>Solidity Cheatsheet</h1>
-              <h2>for version 0.4.24</h2>
+              <img src="topmonks_logo.svg" alt="TopMonks logo" class="logo img-fluid" />
 
-              <div>
+              <div class="social-icons">
                 <a href="https://tomponks.com">
-                  <img src="globe.svg" alt="Globe icon" />
+                  <img src="globe.svg" alt="Globe icon"/>
                 </a>
 
                 <a href="https://github.com/topmonks/solidity_quick_ref">
-                  <img src="github.svg" alt="Github icon" />
+                  <img src="github.svg" alt="Github icon"/>
                 </a>
 
                 <a href="https://twitter.com/topmonks">
-                  <img src="twitter.svg" alt="Twitter icon" />
+                  <img src="twitter.svg" alt="Twitter icon"/>
                 </a>
               </div>
             </div>
