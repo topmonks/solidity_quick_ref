@@ -1,6 +1,6 @@
 # Solidity Quick Ref
 
-Quick reference for Solidity v 0.4.24. Please open up an issue/pull request if you found or want to enchance this.
+Quick reference for Solidity v 0.4.25. Please open up an issue/pull request if you found or want to enchance this.
 
 Live: https://topmonks.github.io/solidity_quick_ref/
 
