@@ -227,14 +227,18 @@ footer {
 
           <section>
             <header>
-              <h2>Simple data types</h2>
-              <code><b><i>type</i> [public] <i>name</i>;</b></code>
+              <h2><a href="https://solidity.readthedocs.io/en/v0.4.25/types.html#value-types">Simple data types</a></h2>
+              <code><b><i>type</i> [public]  [constant] <i>name</i>;</b></code>
               <br />
               <code>uint public amount;</code>
             </header>
 
             <p>
               <code>delete amount;</code> - deletes variable content
+            </p>
+
+            <p>
+              Getters are automatically generated for <code>public</code> vars. <code>constant</code> vars have to be initialized on declaration.
             </p>
 
             <h3>Basic types</h3>
