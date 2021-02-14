@@ -604,7 +604,7 @@ contract Memo {
 
   constructor(string _memo) public {
     memo = _memo;
-    address = msg.sender;
+    owner = msg.sender;
   }
 
   function changeMemo(string newMemo) public onlyOwner {
